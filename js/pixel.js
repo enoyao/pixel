@@ -1,9 +1,8 @@
 (function () {
-
     var $ = function (id) {
         return id ? document.getElementById(id) : null;
     };
-
+    
     // global
     var currentThreshold = 128,
         scale = 0.25,
@@ -52,15 +51,12 @@
     };
 
     var render = function () {
-
         if (!currentImage) {
             alert('请先上传图片');
             return;
         }
-
         var canvasTemp = document.createElement('canvas');
         var context = canvasTemp.getContext('2d');
-
         var image = new Image();
         image.src = currentImage;
         image.onload = function () {
@@ -68,11 +64,9 @@
             canvasTemp.height = image.height * scale;
             // 缩小到 25%
             context.drawImage(image, 0, 0, image.width * scale, image.height * scale);
-
             var imageData = context.getImageData(0, 0, image.width * scale, image.height * scale);
             // 阈值处理
             isThresholdOn.checked && thresholdConvert(context, imageData, currentThreshold, getModeValue(mode));
-
             var dataURL = canvasTemp.toDataURL();
             var canvas = $('canvas');
             var ctx = canvas.getContext('2d');
@@ -81,15 +75,12 @@
             img.onload = function () {
                 canvas.width = img.width / scale;
                 canvas.height = img.height / scale;
-
                 // 反锯齿
                 ctx.imageSmoothingEnabled = false;
                 ctx.mozImageSmoothingEnabled = false;
                 ctx.webkitImageSmoothingEnabled = false;
                 ctx.msImageSmoothingEnabled = false;
-
                 ctx.drawImage(img, 0, 0, img.width / scale, img.height / scale);
-
                 download();
             };
         };
