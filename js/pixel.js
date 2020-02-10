@@ -2,7 +2,7 @@
     var $ = function (id) {
         return id ? document.getElementById(id) : null;
     };
-    
+
     // global
     var currentThreshold = 128,
         scale = 0.25,
@@ -39,9 +39,7 @@
 
             // 灰度计算公式
             var gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
-
             var color = gray >= threshold ? 255 : 0;
-
             data[i] = (mode == 0 && color == 0) ? red : color;    // red
             data[i + 1] = (mode == 0 && color == 0) ? green : color;  // green
             data[i + 2] = (mode == 0 && color == 0) ? blue : color;   // blue
@@ -67,6 +65,7 @@
             var imageData = context.getImageData(0, 0, image.width * scale, image.height * scale);
             // 阈值处理
             isThresholdOn.checked && thresholdConvert(context, imageData, currentThreshold, getModeValue(mode));
+            // canvas转图片
             var dataURL = canvasTemp.toDataURL();
             var canvas = $('canvas');
             var ctx = canvas.getContext('2d');
@@ -115,13 +114,11 @@
         }
     };
 
-
     var download = function () {
         downloadBtn.download = 'pixel.png';
+        // canvas转图片
         downloadBtn.href = canvas.toDataURL();
     };
-
-
 
     // events
     thresholdLevel.addEventListener('change', function () {
