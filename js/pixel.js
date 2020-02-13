@@ -116,8 +116,12 @@
 
     var download = function () {
         downloadBtn.download = 'pixel.png';
+        let downloadPic = canvas.toDataURL();
+        let img = '<img class="preview" src="' + downloadPic + '" alt="preview" >';
+        console.log($('img-download'));
+        $('img-download').innerHTML = img;
         // canvas转图片
-        downloadBtn.href = canvas.toDataURL();
+        // downloadBtn.href = canvas.toDataURL();
     };
 
     // events
